@@ -52,8 +52,15 @@ let g:clang_format#detect_style_file=1 " Use .clangformat at the root of the pro
 autocmd VimEnter * ClangFormatAutoEnable " Enable clangformat on launch
 
 " nvim-lua/completion-nvim neovim/nvim-lspconfig
-lua require'lspconfig'.clangd.setup{on_attach=require'completion'.on_attach}
-lua require'lspconfig'.cmake.setup{on_attach=require'completion'.on_attach}
+lua << EOF
+local lspconfig=require'lspconfig'
+lspconfig.clangd.setup({
+	on_attach=require'completion'.on_attach, 
+	cmd = { "clangd", "--background-index", "--clang-tidy" },
+	semanticHighlighting = true
+})
+lspconfig.cmake.setup{on_attach=require'completion'.on_attach}
+EOF
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
