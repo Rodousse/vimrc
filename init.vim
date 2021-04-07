@@ -68,7 +68,7 @@ let g:cmake_export_compile_commands = 1 " same as -DCMAKE_EXPORT_COMPILE_COMMAND
 let g:cmake_ycm_symlinks = 1 " create symlinks to the generated compilation database for use with clangd in neovim/nvim-lspconfig
 
 " scrooloose/nerdtree
-autocmd VimEnter * NERDTree " Enable nerdtree on launch
+autocmd VimEnter * NERDTree | wincmd p " Enable nerdtree on launch
 
 autocmd VimEnter * AirlineTheme deus
 let g:airline#extensions#tabline#enabled = 1
