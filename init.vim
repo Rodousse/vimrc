@@ -24,7 +24,6 @@ Plug 'rhysd/vim-clang-format' " Clang format
 Plug 'vim-airline/vim-airline' " Tab and status bar
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree' " Project file structure and navigation
-Plug 'yggdroot/indentline' " Show indent spaces
 Plug 'neovim/nvim-lspconfig' " lsp seerver configuration 
 Plug 'nvim-lua/completion-nvim' " lsp completion engine
 Plug 'vhdirk/vim-cmake' " cmake features facilities
