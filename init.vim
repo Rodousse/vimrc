@@ -20,7 +20,6 @@ Plug 'dracula/vim' " Color scheme
 Plug 'ajmwagar/vim-deus' " Color scheme
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy finder
 Plug 'junegunn/fzf.vim' " Fuzzy finder additional commands
-"Plug 'scrooloose/syntastic' " Syntaxe checking
 Plug 'rhysd/vim-clang-format' " Clang format
 Plug 'vim-airline/vim-airline' " Tab and status bar
 Plug 'vim-airline/vim-airline-themes'
@@ -51,17 +50,6 @@ let g:deus_termcolors=256
 " rhysd/vim-clang-format settings
 let g:clang_format#detect_style_file=1 " Use .clangformat at the root of the project
 autocmd VimEnter * ClangFormatAutoEnable " Enable clangformat on launch
-
-" scrooloose/syntastic settings
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-
 
 " nvim-lua/completion-nvim neovim/nvim-lspconfig
 lua require'lspconfig'.clangd.setup{on_attach=require'completion'.on_attach}
