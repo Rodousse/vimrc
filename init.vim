@@ -7,6 +7,9 @@ set encoding=utf-8
 set timeoutlen=300
 set updatetime=300
 
+set list
+set listchars=space:·,tab:→\ \ 
+
 " Display line number relatively except the current line in absolute
 set relativenumber number
 
@@ -51,6 +54,9 @@ let g:deus_termcolors=256
 " rhysd/vim-clang-format settings
 let g:clang_format#detect_style_file=1 " Use .clangformat at the root of the project
 autocmd VimEnter * ClangFormatAutoEnable " Enable clangformat on launch
+if has('win32')
+	let g:clang_format#command='D:\Soft\LLVM\bin\clang-format.exe' " Fix embedded clang format set by msvc command prompt 
+endif
 
 " nvim-lua/completion-nvim neovim/nvim-lspconfig
 let g:completion_matching_ignore_case = 1
@@ -69,8 +75,8 @@ lua << EOF
 		local opts = { noremap=true, silent=true }
 		buf_set_keymap('n', '<space>d', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 		buf_set_keymap('n', '<space>D', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-		buf_set_keymap('n', '<space>h', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-		buf_set_keymap('n', '<space>H', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+		buf_set_keymap('n', '<space>p', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+		buf_set_keymap('n', '<space>P', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 		buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 		buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 		buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
@@ -109,6 +115,8 @@ lua << EOF
 	lspconfig.cmake.setup{on_attach=require'completion'.on_attach}
 
 EOF
+nnoremap <silent> <leader>h :ClangdSwitchSourceHeader<CR>
+
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
