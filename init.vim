@@ -29,7 +29,8 @@ Plug 'scrooloose/nerdtree' " Project file structure and navigation
 Plug 'neovim/nvim-lspconfig' " lsp seerver configuration 
 Plug 'nvim-lua/completion-nvim' " lsp completion engine
 Plug 'vhdirk/vim-cmake' " cmake features facilities
-Plug 'jiangmiao/auto-pairs' " Automatically set corresponding character "(" to ")" or "{" to "}"
+Plug 'jiangmiao/auto-pairs' " Automatically set corresponding character '(' to ')' or '{' to '}'
+Plug 'tikhomirov/vim-glsl' " glsl syntaxe highlighting
 Plug 'liuchengxu/vim-which-key' " Shortcut
 " On-demand lazy load
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
@@ -158,3 +159,6 @@ nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 "	\ },
 "	\ 'e' : 'show_line_diagnostics'
 "\ }
+
+" tikhomirov/vim-glsl
+autocmd! BufNewFile,BufRead *.vs,*.fs,*.gs,*.tese,*.tesc set ft=glsl
