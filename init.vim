@@ -34,6 +34,7 @@ Plug 'tikhomirov/vim-glsl' " glsl syntaxe highlighting
 Plug 'liuchengxu/vim-which-key' " Shortcut
 " On-demand lazy load
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " -------------------------- Plugin related ----------------------
@@ -118,7 +119,18 @@ lua << EOF
 EOF
 nnoremap <silent> <leader>h :ClangdSwitchSourceHeader<CR>
 
-
+"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+	highlight = {
+		enable = true,
+		custom_captures = {
+			-- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+			["foo.bar"] = "Identifier",
+			},
+		},
+	} 
+EOF
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
