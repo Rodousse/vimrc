@@ -40,7 +40,8 @@ call plug#end()
 " -------------------------- Plugin related ----------------------
 " junegunn/fzf settings
 " Look for a file in the current folder hierarchy
-nnoremap <silent> <leader>k :Files<CR>
+nnoremap <silent> <leader>f :Files<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
 
 " ajmwagar/vim-deus settings
 set t_Co=256
@@ -50,7 +51,7 @@ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 set background=dark 
-colorscheme deus
+colorscheme dracula
 let g:deus_termcolors=256
 
 " rhysd/vim-clang-format settings
@@ -86,9 +87,9 @@ lua << EOF
 
 		-- Set some keybinds conditional on server capabilities
 		if client.resolved_capabilities.document_formatting then
-			buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+			buf_set_keymap("n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 		elseif client.resolved_capabilities.document_range_formatting then
-			buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+			buf_set_keymap("n", "<space>F", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
 		end
 
 		  -- Set autocommands conditional on server_capabilities

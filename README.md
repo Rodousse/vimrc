@@ -58,5 +58,11 @@ Linux :
 apt install ninja-build
 ```
 
+### Treesitter
 
+In nvim : 
+
+```
+:TSInstall cpp
+```
 
