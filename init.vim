@@ -7,6 +7,10 @@ set encoding=utf-8
 set timeoutlen=300
 set updatetime=300
 
+" Only hide buffer when switching between them
+set hidden
+
+" Blank caracters visibility
 set list
 set listchars=space:·,tab:→\ \ 
 
