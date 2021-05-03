@@ -14,6 +14,7 @@ set hidden
 set list
 set listchars=space:·,tab:→\ \ 
 
+set tabstop=2 shiftwidth=2 expandtab
 " Display line number relatively except the current line in absolute
 set relativenumber number
 
