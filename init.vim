@@ -25,16 +25,18 @@ let g:mapleader = "\<Space>"
 call plug#begin('~/AppData/Local/nvim/plugged')
 Plug 'dracula/vim' " Color scheme
 Plug 'ajmwagar/vim-deus' " Color scheme
+Plug 'peterhoeg/vim-qml' " QML Syntaxe highlighting
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy finder
 Plug 'junegunn/fzf.vim' " Fuzzy finder additional commands
 Plug 'rhysd/vim-clang-format' " Clang format
 Plug 'vim-airline/vim-airline' " Tab and status bar
 Plug 'vim-airline/vim-airline-themes'
+Plug 'powerline/powerline' " Powerline support with special symbols for terminal
 Plug 'scrooloose/nerdtree' " Project file structure and navigation
 Plug 'neovim/nvim-lspconfig' " lsp seerver configuration 
 Plug 'nvim-lua/completion-nvim' " lsp completion engine
 Plug 'vhdirk/vim-cmake' " cmake features facilities
-Plug 'jiangmiao/auto-pairs' " Automatically set corresponding character '(' to ')' or '{' to '}'
+"Plug 'jiangmiao/auto-pairs' " Automatically set corresponding character '(' to ')' or '{' to '}'
 Plug 'tikhomirov/vim-glsl' " glsl syntaxe highlighting
 Plug 'liuchengxu/vim-which-key' " Shortcut
 " On-demand lazy load
@@ -155,6 +157,7 @@ let g:cmake_ycm_symlinks = 1 " create symlinks to the generated compilation data
 " vim-airline/vim-airline
 autocmd VimEnter * AirlineTheme deus
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 " liuchengxu/vim-which-key
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
