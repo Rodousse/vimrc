@@ -42,6 +42,7 @@ Plug 'liuchengxu/vim-which-key' " Shortcut
 " On-demand lazy load
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'vim-scripts/DoxygenToolkit.vim' " Doxygen comments
 call plug#end()
 
 " -------------------------- Plugin related ----------------------
@@ -183,3 +184,7 @@ nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
 " tikhomirov/vim-glsl
 autocmd! BufNewFile,BufRead *.vs,*.fs,*.gs,*.tese,*.tesc set ft=glsl
+
+
+" 'vim-scripts/DoxygenToolkit.vim'
+nnoremap <silent> <leader>cd :Dox<CR>
