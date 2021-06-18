@@ -25,6 +25,7 @@ let g:mapleader = "\<Space>"
 call plug#begin('~/AppData/Local/nvim/plugged')
 Plug 'dracula/vim' " Color scheme
 Plug 'ajmwagar/vim-deus' " Color scheme
+Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'peterhoeg/vim-qml' " QML Syntaxe highlighting
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy finder
 Plug 'junegunn/fzf.vim' " Fuzzy finder additional commands
@@ -58,8 +59,10 @@ set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
+colorscheme hybrid_reverse
 set background=dark 
-colorscheme dracula
+" Remove the background color of the theme to match the terminal
+highlight Normal guibg=none guifg=none 
 let g:deus_termcolors=256
 
 " rhysd/vim-clang-format settings
@@ -156,9 +159,10 @@ let g:cmake_ycm_symlinks = 1 " create symlinks to the generated compilation data
 "autocmd VimEnter * NERDTree | wincmd p " Enable nerdtree on launch
 
 " vim-airline/vim-airline
-autocmd VimEnter * AirlineTheme deus
+autocmd VimEnter * AirlineTheme hybrid
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+let g:airline_theme = "hybrid"
 
 " liuchengxu/vim-which-key
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
