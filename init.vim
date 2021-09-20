@@ -192,3 +192,6 @@ autocmd! BufNewFile,BufRead *.vs,*.fs,*.gs,*.tese,*.tesc set ft=glsl
 
 " 'vim-scripts/DoxygenToolkit.vim'
 nnoremap <silent> <leader>cd :Dox<CR>
+
+" Termdebug
+let g:termdebug_wide=1
