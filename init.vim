@@ -35,7 +35,14 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'powerline/powerline' " Powerline support with special symbols for terminal
 Plug 'scrooloose/nerdtree' " Project file structure and navigation
 Plug 'neovim/nvim-lspconfig' " lsp seerver configuration 
-Plug 'nvim-lua/completion-nvim' " lsp completion engine
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+" For vsnip users.
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 Plug 'vhdirk/vim-cmake' " cmake features facilities
 "Plug 'jiangmiao/auto-pairs' " Automatically set corresponding character '(' to ')' or '{' to '}'
 Plug 'tikhomirov/vim-glsl' " glsl syntaxe highlighting
@@ -44,6 +51,7 @@ Plug 'liuchengxu/vim-which-key' " Shortcut
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'vim-scripts/DoxygenToolkit.vim' " Doxygen comments
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " -------------------------- Plugin related ----------------------
@@ -70,12 +78,12 @@ let g:clang_format#detect_style_file=1 " Use .clangformat at the root of the pro
 autocmd VimEnter * ClangFormatAutoEnable " Enable clangformat on launch
 if has('win32')
 	let g:clang_format#command='D:\Soft\LLVM\bin\clang-format.exe' " Fix embedded clang format set by msvc command prompt 
+else
+	let g:clang_format#command='clang-format-8'
 endif
 
-" nvim-lua/completion-nvim neovim/nvim-lspconfig
-let g:completion_matching_ignore_case = 1
-let g:completion_matching_smart_case = 1
-let g:completion_trigger_on_delete = 1
+set completeopt=menuone,noinsert,noselect  " Set completeopt to have a better completion experience
+set shortmess+=c
 lua << EOF
 	
 	local nvim_lsp = require('lspconfig')
@@ -118,16 +126,76 @@ lua << EOF
 		end
 	end
 	
-	local on_attach_clangd = function(client, bufnr)
-		require('completion').on_attach(client, bufnr)
-		on_attach(client, bufnr)
-	end
+
+  local cmp = require'cmp'
+
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+      end,
+    },
+    mapping = {
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+      ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      ['<CR>'] = cmp.mapping.confirm{ behavior = cmp.ConfirmBehavior.Replace, select = true },
+    },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' }, -- For vsnip users.
+      -- { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
 
 
-	local lspconfig=require'lspconfig'
-	lspconfig.clangd.setup{on_attach=on_attach_clangd}
-	lspconfig.cmake.setup{on_attach=require'completion'.on_attach}
 
+	nvim_lsp['clangd'].setup{
+    on_attach=on_attach, 
+    capabilities = capabilities,
+  }
+	nvim_lsp['cmake'].setup{
+    on_attach=on_attach,
+  }
+  nvim_lsp['pylsp'].setup{
+    on_attach=on_attach,
+  }
+
+--  require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+--  }
 EOF
 nnoremap <silent> <leader>h :ClangdSwitchSourceHeader<CR>
 
@@ -136,10 +204,6 @@ lua <<EOF
 require'nvim-treesitter.configs'.setup {
 	highlight = {
 		enable = true,
-		custom_captures = {
-			-- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-			["foo.bar"] = "Identifier",
-			},
 		},
 	} 
 EOF
@@ -147,8 +211,6 @@ EOF
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-set completeopt=menuone,noinsert,noselect  " Set completeopt to have a better completion experience
-set shortmess+=c
 
 " vhdirk/vim-cmake
 let g:cmake_project_generator = "Ninja"
@@ -195,3 +257,4 @@ nnoremap <silent> <leader>cd :Dox<CR>
 
 " Termdebug
 let g:termdebug_wide=1
+
