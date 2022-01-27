@@ -59,6 +59,7 @@ call plug#end()
 " Look for a file in the current folder hierarchy
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
+tnoremap <C-[> <C-\><C-n>
 
 " ajmwagar/vim-deus settings
 set t_Co=256
@@ -77,55 +78,56 @@ let g:deus_termcolors=256
 let g:clang_format#detect_style_file=1 " Use .clangformat at the root of the project
 autocmd VimEnter * ClangFormatAutoEnable " Enable clangformat on launch
 if has('win32')
-	let g:clang_format#command='D:\Soft\LLVM\bin\clang-format.exe' " Fix embedded clang format set by msvc command prompt 
+  let g:clang_format#command='D:\Soft\LLVM\bin\clang-format.exe' " Fix embedded clang format set by msvc command prompt 
 else
-	let g:clang_format#command='clang-format-8'
+  let g:clang_format#command='clang-format-8'
 endif
 
 set completeopt=menuone,noinsert,noselect  " Set completeopt to have a better completion experience
 set shortmess+=c
 lua << EOF
-	
-	local nvim_lsp = require('lspconfig')
-	local on_attach = function(client, bufnr)
-		local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-		local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  
+  local nvim_lsp = require('lspconfig')
+  local on_attach = function(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-		buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-		-- Mappings.
-		local opts = { noremap=true, silent=true }
-		buf_set_keymap('n', '<space>d', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-		buf_set_keymap('n', '<space>D', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-		buf_set_keymap('n', '<space>p', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-		buf_set_keymap('n', '<space>P', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-		buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-		buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-		buf_set_keymap('n', '<space>R', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-		buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    -- Mappings.
+    local opts = { noremap=true, silent=true }
+    buf_set_keymap('n', '<space>d', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    buf_set_keymap('n', '<space>D', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', '<space>p', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    buf_set_keymap('n', '<space>P', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '<space>rf', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', '<space>R', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 
-		-- Set some keybinds conditional on server capabilities
-		if client.resolved_capabilities.document_formatting then
-			buf_set_keymap("n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-		elseif client.resolved_capabilities.document_range_formatting then
-			buf_set_keymap("n", "<space>F", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-		end
+    -- Set some keybinds conditional on server capabilities
+    if client.resolved_capabilities.document_formatting then
+      buf_set_keymap("n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    elseif client.resolved_capabilities.document_range_formatting then
+      buf_set_keymap("n", "<space>F", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    end
 
-		  -- Set autocommands conditional on server_capabilities
-		if client.resolved_capabilities.document_highlight then
-			vim.api.nvim_exec([[
-			  hi LspReferenceRead cterm=bold ctermbg=red guibg=#666666
-			  hi LspReferenceText cterm=bold ctermbg=red guibg=#666666
-			  hi LspReferenceWrite cterm=bold ctermbg=red guibg=#666666
-			  augroup lsp_document_highlight
-				autocmd! * <buffer>
-				autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-				autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-			  augroup END
-			]], false)
-		end
-	end
-	
+      -- Set autocommands conditional on server_capabilities
+    if client.resolved_capabilities.document_highlight then
+      vim.api.nvim_exec([[
+        hi LspReferenceRead cterm=bold ctermbg=red guibg=#666666
+        hi LspReferenceText cterm=bold ctermbg=red guibg=#666666
+        hi LspReferenceWrite cterm=bold ctermbg=red guibg=#666666
+        augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        augroup END
+      ]], false)
+    end
+  end
+  
 
   local cmp = require'cmp'
 
@@ -183,11 +185,11 @@ lua << EOF
 
 
 
-	nvim_lsp['clangd'].setup{
+  nvim_lsp['clangd'].setup{
     on_attach=on_attach, 
     capabilities = capabilities,
   }
-	nvim_lsp['cmake'].setup{
+  nvim_lsp['cmake'].setup{
     on_attach=on_attach,
   }
   nvim_lsp['pylsp'].setup{
@@ -202,15 +204,19 @@ nnoremap <silent> <leader>h :ClangdSwitchSourceHeader<CR>
 "Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-	highlight = {
-		enable = true,
-		},
-	} 
+  highlight = {
+    enable = true,
+    },
+  } 
 EOF
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
 " vhdirk/vim-cmake
 let g:cmake_project_generator = "Ninja"
@@ -236,16 +242,16 @@ nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 "vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 "let g:which_key_map =  {}
 "let g:which_key_map = {
-"	\ 'name' : '+lsp',
-"	\ 'f' : 'formatting' ,
-"	\ 'd' : 'go to' ,
-"	\ 'D' : 'definition' ,
-"	\ 'k' : 'hover',
-"	\ 'K' : 'signature_help', 
-"	\ 'r' : {
-"		\ 'n': 'rename'
-"	\ },
-"	\ 'e' : 'show_line_diagnostics'
+" \ 'name' : '+lsp',
+" \ 'f' : 'formatting' ,
+" \ 'd' : 'go to' ,
+" \ 'D' : 'definition' ,
+" \ 'k' : 'hover',
+" \ 'K' : 'signature_help', 
+" \ 'r' : {
+"   \ 'n': 'rename'
+" \ },
+" \ 'e' : 'show_line_diagnostics'
 "\ }
 
 " tikhomirov/vim-glsl
