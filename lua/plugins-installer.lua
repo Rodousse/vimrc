@@ -5,6 +5,7 @@ function G.load_plugins()
   vim.cmd("Plug 'dracula/vim'") -- Color scheme
   vim.cmd("Plug 'kristijanhusak/vim-hybrid-material'") -- Color scheme
   vim.cmd("Plug 'Shatur/neovim-ayu'") -- Color scheme
+  vim.cmd("Plug 'marko-cerovac/material.nvim'") -- Color scheme
   vim.cmd("Plug 'peterhoeg/vim-qml'") -- QML Syntaxe highlighting
   vim.cmd("Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }") -- Fuzzy finder
   vim.cmd("Plug 'junegunn/fzf.vim'") -- Fuzzy finder additional commands
@@ -27,6 +28,7 @@ function G.load_plugins()
   vim.cmd("Plug 'hrsh7th/vim-vsnip'") -- snippet engine to use with nvim-cmp
   vim.cmd("Plug 'rcarriga/nvim-notify'") -- Stylised notification system
   vim.cmd("Plug 'vhdirk/vim-cmake'") -- cmake features facilities
+  vim.cmd("Plug 'sunjon/shade.nvim'") -- Active window better view
   -- On-demand lazy load
   vim.cmd("Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }")
   vim.cmd("Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}")

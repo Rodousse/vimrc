@@ -52,16 +52,20 @@ function G.set_events()
 end
 
 function G.set_color_theme()
-  require('ayu').colorscheme()
-  require('ayu').setup({
-    mirage = true, -- Set to `true` to use `mirage` variant instead of `dark` for dark background.
-    overrides = {}, -- A dictionary of group names, each associated with a dictionary of parameters (`bg`, `fg`, `sp` and `style`) and colors in hex.
+  require('material').setup({
+    italics = {comments = true, functions = true}
   })
+  vim.cmd 'colorscheme material'
+  vim.g.material_style = "palenight"
   -- Remove the background color of the theme to match the terminal
   -- Does throw a warning on startup since none is not an acceptable value
   -- vim.cmd("highlight Normal guibg=none guifg=none ")
   vim.opt.termguicolors = true
   vim.opt.background = "dark"
+  require'shade'.setup({
+    overlay_opacity = 50,
+    opacity_step = 1
+  })
 end
 
 function G.create_autocommands()
