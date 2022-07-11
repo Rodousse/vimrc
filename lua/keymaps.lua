@@ -9,8 +9,6 @@ function G.setup_keymaps()
   vim.api.nvim_set_keymap("t", "<esc>", "<C-\\><C-n>", {noremap = true})
 
   vim.api.nvim_set_keymap("n", "<leader>h", ":ClangdSwitchSourceHeader<CR>", opts)
-  -- liuchengxu/vim-which-key
-  vim.api.nvim_set_keymap("n", "<leader>", ":WhichKey '<Space>'<CR>", opts)
   -- 'vim-scripts/DoxygenToolkit.vim'
   vim.api.nvim_set_keymap("n", "<leader>cd", ":Dox<CR>", opts)
 
@@ -22,6 +20,9 @@ function G.setup_keymaps()
   vim.api.nvim_set_keymap("i", "<S-Tab>", "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'", {expr = true})
   vim.api.nvim_set_keymap("s", "<S-Tab>", "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'", {expr = true})
   vim.api.nvim_set_keymap("n", "<S-Tab>", "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'", {expr = true})
+
+  -- LAZYGIT
+  vim.api.nvim_set_keymap("n", "<leader>gg", ":LazyGit<CR>", opts)
 
   local tel = require("telescope.builtin")
   vim.api.nvim_set_keymap("n", "<leader>ff", ":lua require('telescope.builtin').find_files()<CR>", opts)
@@ -40,7 +41,8 @@ function G.setup_buf_lsp_keymaps(bufnr)
   buf_set_keymap("n", "<leader>fS", "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", keymap_opts)
   buf_set_keymap("n", "<leader>fr", "<cmd>lua require('telescope.builtin').lsp_references()<CR>", keymap_opts)
   buf_set_keymap("n", "<leader>fq", ":lua require('telescope.builtin').diagnostics()<CR>", keymap_opts)
-  buf_set_keymap("n", "<leader>d", "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>", keymap_opts)
+  buf_set_keymap("n", "<leader>jd", "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>", keymap_opts)
+  buf_set_keymap("n", "<leader>jt", "<cmd>lua vim.lsp.buf.type_definition('reuse_win': true)", keymap_opts)
 end
 
 function G.setup_buf_lsp_format_keymaps(bufnr)

@@ -52,20 +52,21 @@ function G.set_events()
 end
 
 function G.set_color_theme()
-  require('material').setup({
-    italics = {comments = true, functions = true}
-  })
-  vim.cmd 'colorscheme material'
-  vim.g.material_style = "palenight"
+  -- For dark theme (neovim's default)
+  vim.o.background = "dark"
+  -- For light theme
+  --vim.o.background = "light"
+  -- Enable transparent background
+  -- vim.g.vscode_transparent = 1
+  -- Enable italic comment
+  vim.g.vscode_italic_comment = 1
+  -- Disable nvim-tree background color
+  vim.g.vscode_disable_nvimtree_bg = true
+  vim.cmd([[colorscheme vscode]])
   -- Remove the background color of the theme to match the terminal
   -- Does throw a warning on startup since none is not an acceptable value
   -- vim.cmd("highlight Normal guibg=none guifg=none ")
   vim.opt.termguicolors = true
-  vim.opt.background = "dark"
-  require'shade'.setup({
-    overlay_opacity = 50,
-    opacity_step = 1
-  })
 end
 
 function G.create_autocommands()

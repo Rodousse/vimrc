@@ -1,5 +1,5 @@
-local G = {}
 
+local G = {}
 
 function G.setup_telescope()
   require('telescope').setup({

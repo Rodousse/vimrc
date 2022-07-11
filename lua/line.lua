@@ -1,14 +1,14 @@
 
-local lualine = require('lualine')
 local G = {}
 
 function G.setup()
+  local lualine = require('lualine')
   lualine.setup({
     options = { theme = 'auto' },
     sections = {
       lualine_b = {'branch', 'diff'},
       lualine_x = {
-          'encoding', 
+          'encoding',
           {
             'diagnostics',
 
@@ -28,12 +28,10 @@ function G.setup()
               info  = 'DiagnosticInfo',  -- Changes diagnostics' info color.
               hint  = 'DiagnosticHint',  -- Changes diagnostics' hint color.
             },
-            symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'},
             colored = true,           -- Displays diagnostics status in color if set to true.
             always_visible = false   -- Show diagnostics even if there are none.
           },
           'filetype'
-        
       }
     }
   })
