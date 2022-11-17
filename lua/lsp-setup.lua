@@ -10,14 +10,14 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   keymaps.setup_buf_lsp_keymaps(bufnr)
   -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.documentFormattingProvider then
     keymaps.setup_buf_lsp_format_keymaps(bufnr)
-  elseif client.resolved_capabilities.document_range_formatting then
+  elseif client.server_capabilities.documentRangeFormattingProvider then
     keymaps.setup_buf_lsp_format_range_keymaps(bufnr)
   end
 
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.documentHighlightProvider then
     vim.api.nvim_exec([[
       hi LspReferenceRead cterm=bold ctermbg=red guibg=#666666
       hi LspReferenceText cterm=bold ctermbg=red guibg=#666666
