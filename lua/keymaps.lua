@@ -2,15 +2,9 @@ local G = {}
 
 function G.setup_keymaps()
   local opts = { noremap=true, silent=true }
-  -- junegunn/fzf settings
-  -- Look for a file in the current folder hierarchy
-  -- vim.api.nvim_set_keymap("n", "<leader>f", ":Files<CR>", opts)
-  -- vim.api.nvim_set_keymap("n", "<leader>b", ":Buffers<CR>", opts)
-  vim.api.nvim_set_keymap("t", "<esc>", "<C-\\><C-n>", {noremap = true})
 
+  vim.api.nvim_set_keymap("t", "<esc>", "<C-\\><C-n>", {noremap = true})
   vim.api.nvim_set_keymap("n", "<leader>h", ":ClangdSwitchSourceHeader<CR>", opts)
-  -- 'vim-scripts/DoxygenToolkit.vim'
-  vim.api.nvim_set_keymap("n", "<leader>cd", ":Dox<CR>", opts)
 
   -- Use <Tab> and <S-Tab> to navigate through snippet placeholder
   vim.api.nvim_set_keymap('i', "<Tab>", 'pumvisible()?"<C-n>":"<Tab>"', {noremap = true, expr = true})
@@ -27,8 +21,6 @@ function G.setup_keymaps()
   vim.api.nvim_set_keymap("n", "<leader>fe", ":lua require('telescope.builtin').live_grep()<CR>", opts)
   vim.api.nvim_set_keymap("n", "<leader>fE", ":lua require('telescope.builtin').grep_string()<CR>", opts)
 
-  -- LAZYGIT
-  vim.api.nvim_set_keymap("n", "<leader>gg", ":LazyGit<CR>", opts)
   -- Git 
   local tel = require("telescope.builtin")
   vim.api.nvim_set_keymap("n", "<leader>gs", ":lua require('telescope.builtin').git_status()<CR>", opts)

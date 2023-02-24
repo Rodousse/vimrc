@@ -11,8 +11,7 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'Mofiqul/vscode.nvim' -- Color scheme
-  use 'peterhoeg/vim-qml' -- QML Syntaxe highlighting
-  use 'nvim-lua/plenary.nvim'
+  use {'nyoom-engineering/oxocarbon.nvim'}
 
   --use {
   --  'mfussenegger/nvim-dap',
@@ -24,11 +23,6 @@ require('packer').startup(function(use)
     'lewis6991/gitsigns.nvim',
     config = [[ require'gitsigns'.setup() ]],
   }
-
-  use({
-    "kdheepak/lazygit.nvim",
-    config = [[vim.g.lazygit_floating_window_use_plenary = 1]]
-  })
 
   use {
     'nvim-telescope/telescope.nvim',
@@ -42,16 +36,14 @@ require('packer').startup(function(use)
     requires = {
       'kyazdani42/nvim-web-devicons',
       opt = true,
-      config = [[
-        require'nvim-web-devicons'.setup {}
-      ]]
+      config = [[ require'nvim-web-devicons'.setup {} ]]
     },
     config = [[ require("line").setup() ]],
   }
 
   use {
       "neovim/nvim-lspconfig",
-      requires = {{"williamboman/nvim-lsp-installer"}},
+      requires = { {'williamboman/mason.nvim'}, {'williamboman/mason-lspconfig.nvim'} },
       config = [[ require'lsp-setup'.setup_lsp() ]],
   }
 

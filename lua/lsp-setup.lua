@@ -1,4 +1,4 @@
-local lsp_servers = {'clangd', 'cmake', 'sumneko_lua'}
+local lsp_servers = {'clangd', 'cmake', 'lua_ls'}
 
 local G = {}
 local nvim_lsp = require('lspconfig')
@@ -32,19 +32,11 @@ local on_attach = function(client, bufnr)
 end
 
 local function install_lsp_servers()
-  require("nvim-lsp-installer").setup({
+  require'mason'.setup()
+  require'mason-lspconfig'.setup ({
     ensure_installed = lsp_servers, -- ensure these servers are always installed
     automatic_installation = false, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
-    install_root_dir = vim.fn.stdpath "data".."/lsp_servers", 
-    ui = {
-        icons = {
-            server_installed = "✓",
-            server_pending = "➜",
-            server_uninstalled = "✗"
-        }
-    },
-    log_level = vim.log.levels.DEBUG
-})
+  })
 end
 
 -- Setup lspconfig.
@@ -52,19 +44,19 @@ end
 function G.setup_lsp()
   install_lsp_servers()
   nvim_lsp['clangd'].setup{
-    on_attach=on_attach, 
+    on_attach=on_attach,
     capabilities = require("completion").cmp_capabilities
   }
   nvim_lsp['cmake'].setup{
-    on_attach=on_attach, 
+    on_attach=on_attach,
     capabilities = require("completion").cmp_capabilities
   }
   nvim_lsp['pylsp'].setup{
-    on_attach=on_attach, 
+    on_attach=on_attach,
     capabilities = require("completion").cmp_capabilities
   }
-  nvim_lsp['sumneko_lua'].setup{
-    on_attach=on_attach, 
+  nvim_lsp['lua_ls'].setup{
+    on_attach=on_attach,
     capabilities = require("completion").cmp_capabilities
   }
 end
