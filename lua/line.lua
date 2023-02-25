@@ -3,12 +3,15 @@ local G = {}
 
 function G.setup()
   local lualine = require('lualine')
+  local navic = require('nvim-navic')
   lualine.setup({
     options = { theme = 'auto' },
     sections = {
-      lualine_b = {'branch', 'diff'},
+      lualine_b = {'filename'},
+      lualine_c = {
+        { navic.get_location, cond = navic.is_available }
+      },
       lualine_x = {
-          'encoding',
           {
             'diagnostics',
 
@@ -31,8 +34,9 @@ function G.setup()
             colored = true,           -- Displays diagnostics status in color if set to true.
             always_visible = false   -- Show diagnostics even if there are none.
           },
-          'filetype'
-      }
+      },
+      lualine_y = {},
+      lualine_z = {'branch'},
     }
   })
 end

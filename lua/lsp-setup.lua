@@ -17,6 +17,9 @@ local on_attach = function(client, bufnr)
   end
 
   -- Set autocommands conditional on server_capabilities
+  if client.server_capabilities.documentSymbolProvider then
+    require'nvim-navic'.attach(client, bufnr)
+  end
   if client.server_capabilities.documentHighlightProvider then
     vim.api.nvim_exec([[
       hi LspReferenceRead cterm=bold ctermbg=red guibg=#666666
@@ -31,18 +34,22 @@ local on_attach = function(client, bufnr)
   end
 end
 
-local function install_lsp_servers()
-  require'mason'.setup()
-  require'mason-lspconfig'.setup ({
-    ensure_installed = lsp_servers, -- ensure these servers are always installed
-    automatic_installation = false, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
-  })
+local mason_setup = false
+local function setup_mason()
+  if(not mason_setup) then
+    require'mason'.setup()
+    mason_setup = true
+  end
 end
 
 -- Setup lspconfig.
 
 function G.setup_lsp()
-  install_lsp_servers()
+  setup_mason()
+  require'mason-lspconfig'.setup ({
+    ensure_installed = lsp_servers, -- ensure these servers are always installed
+    automatic_installation = false, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+  })
   nvim_lsp['clangd'].setup{
     on_attach=on_attach,
     capabilities = require("completion").cmp_capabilities
@@ -61,4 +68,68 @@ function G.setup_lsp()
   }
 end
 
+-- Setup lspconfig.
+
+function G.setup_dap()
+  setup_mason()
+  require'mason-nvim-dap'.setup({
+    ensure_installed = {'cppdbg'}, -- ensure these servers are always installed
+    automatic_setup = true,
+  })
+  require 'mason-nvim-dap'.setup_handlers {}
+
+  local dap = require'dap'
+
+  dap.configurations.cpp =
+  {
+    {
+      name = "Launch file",
+      type = "cppdbg",
+      request = "launch",
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      end,
+      cwd = '${workspaceFolder}',
+      stopAtEntry = true,
+      setupCommands = {
+        {
+           text = '-enable-pretty-printing',
+           description =  'enable pretty printing',
+           ignoreFailures = false
+        },
+      },
+    },
+    {
+      name = 'Attach to gdbserver :1234',
+      type = 'cppdbg',
+      request = 'launch',
+      MIMode = 'gdb',
+      miDebuggerServerAddress = 'localhost:1234',
+      miDebuggerPath = '/usr/bin/gdb',
+      cwd = '${workspaceFolder}',
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      end,
+      setupCommands = {
+        {
+           text = '-enable-pretty-printing',
+           description =  'enable pretty printing',
+           ignoreFailures = false
+        },
+      },
+    },
+  }
+
+  require("dapui").setup()
+  local dapui = require("dapui")
+  dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+  end
+  dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+  end
+  dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+  end
+end
 return G

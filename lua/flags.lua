@@ -10,11 +10,6 @@ function G.set_global_variables()
   else
     vim.g["clang_format#command"] = "clang-format"
   end
-  -- vhdirk/vim-cmake
-  vim.g.cmake_project_generator = 'Ninja'
-  vim.g.cmake_export_compile_commands = 1 -- same as -DCMAKE_EXPORT_COMPILE_COMMANDS'
-  vim.g.cmake_ycm_symlinks = 1 -- create symlinks to the generated compilation database for use with clangd in neovim/nvim-lspconfig'
-
   -- Termdebug
   vim.g.termdebug_wide = 1
 end
@@ -31,8 +26,9 @@ function G.set_options()
   -- Blank caracters visibility
   vim.opt.list = true
   vim.opt.listchars = {
-    space = "·", 
-    tab = "→  "
+    space = "·",
+    tab = "→  ",
+    trail = ">"
   }
 
   vim.opt.tabstop = 2

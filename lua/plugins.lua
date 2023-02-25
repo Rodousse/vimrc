@@ -12,12 +12,25 @@ require('packer').startup(function(use)
 
   use 'Mofiqul/vscode.nvim' -- Color scheme
   use {'nyoom-engineering/oxocarbon.nvim'}
+  use {
+    'ggandor/lightspeed.nvim',
+    config = [[require'lightspeed'.setup {}]]
+  }
 
-  --use {
-  --  'mfussenegger/nvim-dap',
-  --  --require = {{'Pocco81/dap-buddy'}},
-  --  config = [[]]
-  --}
+  use {
+    "rcarriga/nvim-dap-ui",
+    requires = {
+      {"mfussenegger/nvim-dap"},
+      {"williamboman/mason.nvim"},
+      {"jay-babu/mason-nvim-dap.nvim"}
+    },
+    config = [[ require'lsp-setup'.setup_dap() ]],
+  }
+
+  use {
+    "SmiteshP/nvim-navic",
+    requires = "neovim/nvim-lspconfig"
+  }
 
   use {
     'lewis6991/gitsigns.nvim',
