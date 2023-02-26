@@ -55,17 +55,6 @@ require('packer').startup(function(use)
   }
 
   use {
-      "neovim/nvim-lspconfig",
-      requires = { {'williamboman/mason.nvim'}, {'williamboman/mason-lspconfig.nvim'} },
-      config = [[ require'lsp-setup'.setup_lsp() ]],
-  }
-
-  use {
-    'mfussenegger/nvim-lint',
-    config = [[ require("linter").setup_linter()  ]],
-  }
-
-  use {
     'hrsh7th/cmp-nvim-lsp',
     requires = {
       {'hrsh7th/cmp-buffer'},
@@ -76,6 +65,17 @@ require('packer').startup(function(use)
       {'hrsh7th/vim-vsnip'},-- snippet engine to use with nvim-cmp
     },
     config = [[ require("completion").setup_completion()  ]],
+  }
+
+  use {
+      "neovim/nvim-lspconfig",
+      requires = { {'williamboman/mason.nvim'}, {'williamboman/mason-lspconfig.nvim'} },
+      config = [[ require'lsp-setup'.setup_lsp() ]],
+  }
+
+  use {
+    'mfussenegger/nvim-lint',
+    config = [[ require("linter").setup_linter()  ]],
   }
 
   use {

@@ -35,8 +35,8 @@ function G.set_options()
   vim.opt.shiftwidth = 2
   vim.opt.expandtab = true
   -- Display line number relatively except the current line in absolute
-  vim.opt.relativenumber = true 
-  vim.opt.number = true 
+  vim.opt.relativenumber = true
+  vim.opt.number = true
   vim.opt.completeopt = "menuone,noinsert,noselect,preview,noselect"  -- Set completeopt to have a better completion experience
   vim.opt.shortmess:append("c")
 end
