@@ -76,7 +76,6 @@ function G.setup_dap()
     ensure_installed = {'cppdbg'}, -- ensure these servers are always installed
     automatic_setup = true,
   })
-  require 'mason-nvim-dap'.setup_handlers {}
 
   local dap = require'dap'
 

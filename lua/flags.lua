@@ -6,7 +6,7 @@ function G.set_global_variables()
   -- rhysd/vim-clang-format settings
   vim.g['clang_format#detect_style_file'] = 1 -- Use .clangformat at the root of the project
   if vim.fn.has("win32") == 1 then
-    vim.g["clang_format#command"] = "D:\\Soft\\LLVM\\bin\\clang-format.exe" -- Fix embedded clang format set by msvc command prompt
+    vim.g["clang_format#command"] = "clang-format.exe" -- Fix embedded clang format set by msvc command prompt
   else
     vim.g["clang_format#command"] = "clang-format"
   end
@@ -48,22 +48,6 @@ function G.set_events()
 end
 
 function G.set_color_theme()
-  -- For dark theme (neovim's default)
-  vim.o.background = "dark"
-  -- For light theme
-  --vim.o.background = "light"
-  -- Enable transparent background
-  -- vim.g.vscode_transparent = 1
-  -- Enable italic comment
-  vim.g.vscode_italic_comment = 1
-  -- Disable nvim-tree background color
-  vim.g.vscode_disable_nvimtree_bg = true
-  -- vim.cmd([[colorscheme vscode]])
-  vim.cmd([[colorscheme oxocarbon]])
-  -- Remove the background color of the theme to match the terminal
-  -- Does throw a warning on startup since none is not an acceptable value
-  -- vim.cmd("highlight Normal guibg=none guifg=none ")
-  vim.opt.termguicolors = true
 end
 
 function G.create_autocommands()

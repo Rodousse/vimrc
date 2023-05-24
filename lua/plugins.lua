@@ -10,8 +10,30 @@ require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  use 'Mofiqul/vscode.nvim' -- Color scheme
-  use {'nyoom-engineering/oxocarbon.nvim'}
+  --use 
+  use {
+    'Mofiqul/vscode.nvim',
+    --'nyoom-engineering/oxocarbon.nvim',
+    config = [[
+      -- For dark theme (neovim's default)
+      vim.o.background = "dark"
+      -- For light theme
+      -- vim.o.background = "light"
+      -- Enable transparent background
+      -- vim.g.vscode_transparent = 1
+      -- Enable italic comment
+      -- vim.g.vscode_italic_comment = 1
+      -- Disable nvim-tree background color
+      -- vim.g.vscode_disable_nvimtree_bg = true
+       vim.cmd("colorscheme vscode")
+      --vim.cmd("colorscheme oxocarbon")
+      -- Remove the background color of the theme to match the terminal
+      -- Does throw a warning on startup since none is not an acceptable value
+      -- vim.cmd("highlight Normal guibg=none guifg=none ")
+      -- vim.opt.termguicolors = true
+    ]]
+  }
+  --use {'kvrohit/rasmus.nvim'}
   use {
     'ggandor/lightspeed.nvim',
     config = [[require'lightspeed'.setup {}]]
