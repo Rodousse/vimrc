@@ -75,6 +75,7 @@ function G.setup_dap()
   require'mason-nvim-dap'.setup({
     ensure_installed = {'cppdbg'}, -- ensure these servers are always installed
     automatic_setup = true,
+    handlers = {},
   })
 
   local dap = require'dap'
@@ -118,6 +119,7 @@ function G.setup_dap()
       },
     },
   }
+  dap.configurations.c = dap.configurations.cpp
 
   require("dapui").setup()
   local dapui = require("dapui")

@@ -23,12 +23,15 @@ function G.set_options()
   -- Only hide buffer when switching between them
   vim.opt.hidden = true
 
+  vim.opt.clipboard = "unnamedplus"
+  vim.fn.matchadd('errorMsg', [[\s\+$]])
+
   -- Blank caracters visibility
   vim.opt.list = true
   vim.opt.listchars = {
     space = "·",
     tab = "→  ",
-    trail = ">"
+    trail = "█"
   }
 
   vim.opt.tabstop = 2

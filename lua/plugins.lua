@@ -33,10 +33,13 @@ require('packer').startup(function(use)
       -- vim.opt.termguicolors = true
     ]]
   }
-  --use {'kvrohit/rasmus.nvim'}
+
   use {
-    'ggandor/lightspeed.nvim',
-    config = [[require'lightspeed'.setup {}]]
+    'ggandor/leap.nvim',
+    requires = {
+      'tpope/vim-repeat',
+    },
+    config = [[require('leap').add_default_mappings()]]
   }
 
   use {
