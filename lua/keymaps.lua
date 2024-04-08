@@ -3,7 +3,7 @@ local G = {}
 function G.setup_keymaps()
   local opts = { noremap=true, silent=true }
 
-  vim.api.nvim_set_keymap("t", "<esc>", "<C-\\><C-n>", {noremap = true})
+  vim.api.nvim_set_keymap("t", "<esc><esc>", "<C-\\><C-n>", {noremap = true})
   vim.api.nvim_set_keymap("n", "<leader>h", "<cmd>ClangdSwitchSourceHeader<CR>", opts)
 
   -- Use <Tab> and <S-Tab> to navigate through snippet placeholder
@@ -28,8 +28,7 @@ function G.setup_keymaps()
   -- search
   vim.api.nvim_set_keymap("n", "<leader>/", "<cmd>lua require('telescope.builtin').search_history()<CR>", opts)
 
-  -- Git 
-  local tel = require("telescope.builtin")
+  -- Git
   vim.api.nvim_set_keymap("n", "<leader>gs", "<cmd>lua require('telescope.builtin').git_status()<CR>", opts)
   vim.api.nvim_set_keymap("n", "<leader>gc", "<cmd>lua require('telescope.builtin').git_commits()<CR>", opts)
   vim.api.nvim_set_keymap("n", "<leader>gC", "<cmd>lua require('telescope.builtin').git_bcommits()<CR>", opts)

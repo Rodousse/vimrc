@@ -47,7 +47,8 @@ require('packer').startup(function(use)
     requires = {
       {"mfussenegger/nvim-dap"},
       {"williamboman/mason.nvim"},
-      {"jay-babu/mason-nvim-dap.nvim"}
+      {"jay-babu/mason-nvim-dap.nvim"},
+      {"nvim-neotest/nvim-nio"}
     },
     config = [[ require'lsp-setup'.setup_dap() ]],
   }
