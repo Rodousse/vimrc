@@ -1,4 +1,4 @@
-local lsp_servers = {'clangd', 'cmake', 'lua_ls'}
+local lsp_servers = {'clangd', 'cmake', 'lua_ls', 'rust_analyzer'}
 
 local G = {}
 local nvim_lsp = require('lspconfig')
@@ -50,22 +50,12 @@ function G.setup_lsp()
     ensure_installed = lsp_servers, -- ensure these servers are always installed
     automatic_installation = false, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
   })
-  nvim_lsp['clangd'].setup{
-    on_attach=on_attach,
-    capabilities = require("completion").cmp_capabilities
-  }
-  nvim_lsp['cmake'].setup{
-    on_attach=on_attach,
-    capabilities = require("completion").cmp_capabilities
-  }
-  nvim_lsp['pylsp'].setup{
-    on_attach=on_attach,
-    capabilities = require("completion").cmp_capabilities
-  }
-  nvim_lsp['lua_ls'].setup{
-    on_attach=on_attach,
-    capabilities = require("completion").cmp_capabilities
-  }
+  for _, server in ipairs(lsp_servers) do
+    nvim_lsp[server].setup{
+      on_attach=on_attach,
+      capabilities = require("completion").cmp_capabilities
+    }
+  end
 end
 
 -- Setup lspconfig.
