@@ -5,6 +5,7 @@ function G.setup_keymaps()
 
   vim.api.nvim_set_keymap("t", "<esc><esc>", "<C-\\><C-n>", {noremap = true})
   vim.api.nvim_set_keymap("n", "<leader>h", "<cmd>ClangdSwitchSourceHeader<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>ToggleTerm direction=float<CR>", opts)
 
   -- Use <Tab> and <S-Tab> to navigate through snippet placeholder
   vim.api.nvim_set_keymap('i', "<Tab>", 'pumvisible()?"<C-n>":"<Tab>"', {noremap = true, expr = true})
