@@ -66,7 +66,7 @@ end
 
 function G.setup_buf_lsp_format_keymaps(bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  buf_set_keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", keymap_opts)
+  buf_set_keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.format()<CR>", keymap_opts)
 end
 
 function G.setup_buf_lsp_format_range_keymaps(bufnr)

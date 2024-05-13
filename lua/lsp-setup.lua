@@ -50,7 +50,7 @@ function G.setup_lsp()
     ensure_installed = lsp_servers, -- ensure these servers are always installed
     automatic_installation = false, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
   })
-  for _, server in ipairs(lsp_servers) do
+  for _, server in ipairs(require'mason-lspconfig'.get_installed_servers()) do
     nvim_lsp[server].setup{
       on_attach=on_attach,
       capabilities = require("completion").cmp_capabilities
