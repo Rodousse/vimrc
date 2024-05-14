@@ -75,6 +75,11 @@ function G.setup_buf_lsp_format_range_keymaps(bufnr)
   buf_set_keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", keymap_opts)
 end
 
+function G.setup_toggle_terminal_keymaps()
+  local opts = {buffer = 0}
+  vim.keymap.set('n', '<esc>', "<cmd>ToggleTerm<CR>", opts)
+end
+
 local cmp = require('cmp')
 G.completion_keymaps = {
       ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),

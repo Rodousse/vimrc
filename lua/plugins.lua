@@ -11,6 +11,7 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup()
+    vim.cmd("autocmd! TermOpen term://* lua require'keymaps'.setup_toggle_terminal_keymaps()")
   end}
   use {
     'Mofiqul/vscode.nvim',
