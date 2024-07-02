@@ -63,7 +63,7 @@ end
 function G.setup_dap()
   setup_mason()
   require'mason-nvim-dap'.setup({
-    ensure_installed = {'cppdbg'}, -- ensure these servers are always installed
+    ensure_installed = {'lldb-vscode'}, -- ensure these servers are always installed
     automatic_setup = true,
     handlers = {},
   })
@@ -74,7 +74,7 @@ function G.setup_dap()
   {
     {
       name = "Launch file",
-      type = "cppdbg",
+      type = "lldb",
       request = "launch",
       program = function()
         return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
@@ -91,7 +91,7 @@ function G.setup_dap()
     },
     {
       name = 'Attach to gdbserver :1234',
-      type = 'cppdbg',
+      type = 'lldb',
       request = 'launch',
       MIMode = 'gdb',
       miDebuggerServerAddress = 'localhost:1234',
