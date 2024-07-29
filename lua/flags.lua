@@ -34,8 +34,8 @@ function G.set_options()
     trail = "█"
   }
 
-  vim.opt.tabstop = 2
-  vim.opt.shiftwidth = 2
+  vim.opt.tabstop = 4
+  vim.opt.shiftwidth = 4
   vim.opt.expandtab = true
   -- Display line number relatively except the current line in absolute
   vim.opt.relativenumber = true
