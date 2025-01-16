@@ -29,7 +29,8 @@ function G.set_options()
   -- Blank caracters visibility
   vim.opt.list = true
   vim.opt.listchars = {
-    space = "·",
+    --space = "·",
+    space = " ",
     tab = "→  ",
     trail = "█"
   }
