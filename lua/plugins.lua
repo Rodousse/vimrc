@@ -15,10 +15,10 @@ require('packer').startup(function(use)
     end }
     use {
         'Mofiqul/vscode.nvim',
-        config = [[
-       vim.o.background = "dark"
-       vim.cmd("colorscheme vscode")
-    ]]
+    --     config = [[
+    --    vim.o.background = "dark"
+    --    vim.cmd("colorscheme vscode")
+    -- ]]
     }
 
     use {
@@ -123,4 +123,8 @@ require('packer').startup(function(use)
             vim.opt.termguicolors = true
             require("bufferline").setup {}
             ]] }
+    use { "savq/melange-nvim",
+    config = function ()
+        vim.cmd.colorscheme "melange"
+    end}
 end)
