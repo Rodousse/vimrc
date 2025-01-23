@@ -19,6 +19,7 @@ function G.set_options()
   vim.opt.timeoutlen = 500
   vim.opt.updatetime = 500
   vim.opt.scrolloff = 13
+  vim.opt.cursorline = true
 
   -- Only hide buffer when switching between them
   vim.opt.hidden = true

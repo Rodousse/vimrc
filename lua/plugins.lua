@@ -94,6 +94,7 @@ require('packer').startup(function(use)
         'rcarriga/nvim-notify',
         config = [[
       vim.notify = require("notify")
+      require("notify").setup()
     ]]
     }
 
