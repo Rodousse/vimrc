@@ -21,6 +21,13 @@ function G.set_options()
   vim.opt.scrolloff = 13
   vim.opt.cursorline = true
 
+  if vim.fn.has("win32") == 1 then
+      vim.opt.shell='pwsh.exe'
+      vim.opt.shellcmdflag='-command'
+      vim.opt.shellquote=''
+      vim.opt.shellxquote=''
+  end
+
   -- Only hide buffer when switching between them
   vim.opt.hidden = true
 
