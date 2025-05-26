@@ -6,20 +6,14 @@ local on_attach = function(client, bufnr)
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    local keymaps = require("keymaps")
-    -- Mappings.
-    keymaps.setup_buf_lsp_keymaps(bufnr)
-    -- Set some keybinds conditional on server capabilities
-    if client.server_capabilities.documentFormattingProvider then
-        keymaps.setup_buf_lsp_format_keymaps(bufnr)
-    elseif client.server_capabilities.documentRangeFormattingProvider then
-        keymaps.setup_buf_lsp_format_range_keymaps(bufnr)
-    end
-
-    -- Set autocommands conditional on server_capabilities
     if client.server_capabilities.documentSymbolProvider then
         require 'nvim-navic'.attach(client, bufnr)
     end
+
+    local keymaps = require("keymaps")
+    -- Mappings.
+    keymaps.setup_buf_lsp_keymaps(bufnr, client.server_capabilities)
+
     if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_exec([[
       hi LspReferenceRead cterm=bold ctermbg=red guibg=#666666
@@ -47,13 +41,16 @@ end
 function G.setup_lsp()
     setup_mason()
     require 'mason-lspconfig'.setup({
+        automatic_enable = false,
         ensure_installed = lsp_servers, -- ensure these servers are always installed
         automatic_installation = false, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
     })
+    local capabilities = require("completion").cmp_capabilities
+    capabilities.offsetEncoding = { "utf-16" }
     for _, server in ipairs(require 'mason-lspconfig'.get_installed_servers()) do
         nvim_lsp[server].setup {
             on_attach = on_attach,
-            capabilities = require("completion").cmp_capabilities
+            capabilities = capabilities
         }
     end
 end
@@ -83,6 +80,8 @@ function G.setup_dap()
     }
     dap.configurations.c = dap.configurations.cpp
     dap.configurations.rust = dap.configurations.cpp
+    dap.configurations.objc = dap.configurations.cpp
+    dap.configurations.objcpp = dap.configurations.cpp
 
     require("dapui").setup()
     local dapui = require("dapui")

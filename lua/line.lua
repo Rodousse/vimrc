@@ -9,7 +9,7 @@ function G.setup()
     sections = {
       lualine_b = {'filename'},
       lualine_c = {
-        { navic.get_location, cond = navic.is_available }
+        { "navic" }
       },
       lualine_x = {
           {

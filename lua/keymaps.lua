@@ -42,10 +42,10 @@ function G.setup_keymaps()
 end
 
 local keymap_opts = { noremap=true, silent=true }
-function G.setup_buf_lsp_keymaps(bufnr)
+function G.setup_buf_lsp_keymaps(bufnr, server_capabilities)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  buf_set_keymap("n", "<leader>p", "<cmd>lua vim.lsp.buf.hover()<CR>", keymap_opts)
-  buf_set_keymap("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", keymap_opts)
+  buf_set_keymap("n", "K",          "<cmd>lua vim.lsp.buf.hover()<CR>", keymap_opts)
+  buf_set_keymap("n", "<leader>e",  "<cmd>lua vim.diagnostic.open_float()<CR>", keymap_opts)
   buf_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", keymap_opts)
   buf_set_keymap("n", "<leader>rf", "<cmd>lua vim.lsp.buf.code_action()<CR>", keymap_opts)
   buf_set_keymap("n", "<leader>fs", "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", keymap_opts)
@@ -54,16 +54,12 @@ function G.setup_buf_lsp_keymaps(bufnr)
   buf_set_keymap("n", "<leader>fq", "<cmd>lua require('telescope.builtin').diagnostics()<CR>", keymap_opts)
   buf_set_keymap("n", "<leader>jd", "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>", keymap_opts)
   buf_set_keymap("n", "<leader>jt", "<cmd>lua require('telescope.builtin').lsp_type_definitions()<CR>()", keymap_opts)
-end
 
-function G.setup_buf_lsp_format_keymaps(bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  buf_set_keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.format()<CR>", keymap_opts)
-end
+  -- Set some keybinds conditional on server capabilities
+  if server_capabilities.documentFormattingProvider then
+      buf_set_keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.format()<CR>", keymap_opts)
+  end
 
-function G.setup_buf_lsp_format_range_keymaps(bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  buf_set_keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", keymap_opts)
 end
 
 function G.setup_toggle_terminal_keymaps()

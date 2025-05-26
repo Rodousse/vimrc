@@ -61,6 +61,7 @@ require('packer').startup(function(use)
         'nvim-lualine/lualine.nvim',
         requires = {
             'nvim-tree/nvim-web-devicons',
+            'SmiteshP/nvim-navic',
         },
         config = [[ require("line").setup() ]],
     }
