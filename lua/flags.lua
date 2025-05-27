@@ -20,6 +20,7 @@ function G.set_options()
   vim.opt.updatetime = 500
   vim.opt.scrolloff = 13
   vim.opt.cursorline = true
+  vim.opt.fillchars = {eob = " "}
 
   if vim.fn.has("win32") == 1 then
       vim.opt.shell='pwsh.exe'
