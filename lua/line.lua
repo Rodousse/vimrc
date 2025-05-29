@@ -22,6 +22,11 @@ function G.setup()
             },
             lualine_x = {
                 {
+                    require("noice").api.statusline.mode.get,
+                    cond = require("noice").api.statusline.mode.has,
+                    color = { fg = "#ff9e64" },
+                },
+                {
                     'diagnostics',
 
                     -- Table of diagnostic sources, available sources are:
@@ -45,7 +50,15 @@ function G.setup()
                 },
             },
             lualine_y = { 'lsp_status' },
-            lualine_z = { 'branch' },
+            lualine_z =
+            {
+                {
+                    function()
+                        return require('auto-session.lib').current_session_name(true)
+                    end
+                },
+                { 'branch' }
+            },
         },
         sections = {}
     });
