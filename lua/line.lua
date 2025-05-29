@@ -7,10 +7,16 @@ function G.setup()
         options = {
             theme = 'auto',
             globalstatus = true,
-            always_show_tabline = false
+            always_show_tabline = true
         },
-        sections = {
-            lualine_b = { 'filename' },
+        tabline =
+        {
+            lualine_a = {
+                "mode"
+            },
+            lualine_b = {
+                'filename',
+            },
             lualine_c = {
                 { "navic" }
             },
@@ -38,12 +44,11 @@ function G.setup()
                     always_visible = false         -- Show diagnostics even if there are none.
                 },
             },
-            lualine_x = { 'diagnostics' },
             lualine_y = { 'lsp_status' },
             lualine_z = { 'branch' },
-        }
-    })
-    vim.opt.stal = 0
+        },
+        sections = {}
+    });
 end
 
 return G

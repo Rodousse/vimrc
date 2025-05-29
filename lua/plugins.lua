@@ -13,12 +13,13 @@ require('packer').startup(function(use)
         require("toggleterm").setup()
         vim.cmd("autocmd! TermOpen term://* lua require'keymaps'.setup_toggle_terminal_keymaps()")
     end }
+
     use {
         'Mofiqul/vscode.nvim',
-    --     config = [[
-    --    vim.o.background = "dark"
-    --    vim.cmd("colorscheme vscode")
-    -- ]]
+        --     config = [[
+        --    vim.o.background = "dark"
+        --    vim.cmd("colorscheme vscode")
+        -- ]]
     }
 
     use {
@@ -87,7 +88,7 @@ require('packer').startup(function(use)
 
     use {
         'mfussenegger/nvim-lint',
-        config = [[ require("linter").setup_linter()  ]],
+        config = [[ require("linter").setup_linter() ]],
     }
 
     use {
@@ -125,8 +126,54 @@ require('packer').startup(function(use)
             vim.opt.termguicolors = true
             require("bufferline").setup {}
             ]] }
+
     use { "savq/melange-nvim",
-    config = function ()
-        vim.cmd.colorscheme "melange"
-    end}
+        --config = function ()
+        --    vim.cmd.colorscheme "melange"
+        --end
+    }
+
+    use { "catppuccin/nvim", as = "catppuccin",
+        --config = function()
+        --    vim.cmd.colorscheme "catppuccin-frappe"
+        --end
+    }
+
+    use { "projekt0n/github-nvim-theme",
+        config = function()
+            vim.cmd.colorscheme "github_dark"
+        end
+    }
+
+    use {
+        'folke/noice.nvim',
+        requires = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+        },
+        config = function()
+            require("noice").setup({
+                lsp = {
+                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                    override = {
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                        ["vim.lsp.util.stylize_markdown"] = true,
+                        ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                    },
+                },
+                -- you can enable a preset for easier configuration
+                presets = {
+                    bottom_search = true, -- use a classic bottom cmdline for search
+                    command_palette = true, -- position the cmdline and popupmenu together
+                    long_message_to_split = true, -- long messages will be sent to a split
+                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = false, -- add a border to hover docs and signature help
+                },
+            })
+        end
+    }
 end)
