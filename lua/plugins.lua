@@ -134,15 +134,15 @@ require('packer').startup(function(use)
     }
 
     use { "catppuccin/nvim", as = "catppuccin",
-        --config = function()
-        --    vim.cmd.colorscheme "catppuccin-frappe"
-        --end
+        config = function()
+            vim.cmd.colorscheme "catppuccin-macchiato"
+        end
     }
 
     use { "projekt0n/github-nvim-theme",
-        config = function()
-            vim.cmd.colorscheme "github_dark"
-        end
+        --config = function()
+        --    vim.cmd.colorscheme "github_dark"
+        --end
     }
 
     use {

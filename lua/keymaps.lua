@@ -25,6 +25,7 @@ function G.setup_keymaps()
     vim.keymap.set("n", "<leader>gc", "<cmd>lua require('telescope.builtin').git_commits()<CR>", opts)
     vim.keymap.set("n", "<leader>gC", "<cmd>lua require('telescope.builtin').git_bcommits()<CR>", opts)
     vim.keymap.set("n", "<leader>gb", "<cmd>lua require('telescope.builtin').git_branches()<CR>", opts)
+    vim.keymap.set("n", "<leader>gd", "Gitsigns diffthis", opts)
 
     -- Debug
     vim.keymap.set("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", opts)
